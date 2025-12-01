@@ -1,11 +1,17 @@
 import { Link, useLocation } from "react-router";
+
 import useAuthUser from "../hooks/useAuthUser";
 import { BellIcon, LogOutIcon, ShipWheelIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import useLogout from "../hooks/useLogout";
+import { useState } from "react";
+import ProfileEditModal from "./ProfileEditModal";
+import useUpdateProfile from "../hooks/useUpdateProfile";
 
 const Navbar = () => {
   const { authUser } = useAuthUser();
+  const [isProfileModalOpen, setProfileModalOpen] = useState(false);
+  const { isPending, error, updateProfileMutation } = useUpdateProfile();
   const location = useLocation();
   const isChatPage = location.pathname?.startsWith("/chat");
 
@@ -16,6 +22,13 @@ const Navbar = () => {
   // });
 
   const { logoutMutation } = useLogout();
+
+  const handleAvatarClick = () => setProfileModalOpen(true);
+  const handleProfileSave = (data) => {
+    updateProfileMutation(data, {
+      onSuccess: () => setProfileModalOpen(false),
+    });
+  };
 
   return (
     <nav className="bg-base-200 border-b border-base-300 sticky top-0 z-30 h-16 flex items-center">
@@ -44,7 +57,8 @@ const Navbar = () => {
           {/* TODO */}
           <ThemeSelector />
 
-          <div className="avatar">
+
+          <div className="avatar cursor-pointer" onClick={handleAvatarClick} title="Edit Profile">
             <div className="w-9 rounded-full">
               <img src={authUser?.profilePic} alt="User Avatar" rel="noreferrer" />
             </div>
@@ -56,6 +70,12 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+      <ProfileEditModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+        user={authUser}
+        onSave={handleProfileSave}
+      />
     </nav>
   );
 };

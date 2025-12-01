@@ -1,5 +1,41 @@
+
 import User from "../models/User.js";
 import FriendRequest from "../models/FriendRequest.js";
+
+// Update user profile
+export async function updateProfile(req, res) {
+  try {
+    const userId = req.user.id;
+    const {
+      fullName,
+      email,
+      profilePic,
+      nativeLanguage,
+      learningLanguage,
+      bio,
+      location,
+    } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        fullName,
+        email,
+        profilePic,
+        nativeLanguage,
+        learningLanguage,
+        bio,
+        location,
+      },
+      { new: true, runValidators: true, context: 'query' }
+    ).select("-password");
+
+    res.status(200).json({ user: updatedUser });
+  } catch (error) {
+    console.error("Error in updateProfile controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 export async function getRecommendedUsers(req, res) {
   try {
