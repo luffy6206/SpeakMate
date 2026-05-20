@@ -50,8 +50,10 @@ const NotificationsPage = () => {
                       <div className="card-body p-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="avatar w-14 h-14 rounded-full bg-base-300">
-                              <img src={request.sender.profilePic} alt={request.sender.fullName} />
+                            <div className="avatar">
+                              <div className="w-14 rounded-full bg-base-300">
+                                <img src={request.sender.profilePic} alt={request.sender.fullName} />
+                              </div>
                             </div>
                             <div>
                               <h3 className="font-semibold">{request.sender.fullName}</h3>
@@ -94,11 +96,13 @@ const NotificationsPage = () => {
                     <div key={notification._id} className="card bg-base-200 shadow-sm">
                       <div className="card-body p-4">
                         <div className="flex items-start gap-3">
-                          <div className="avatar mt-1 size-10 rounded-full">
-                            <img
-                              src={notification.recipient.profilePic}
-                              alt={notification.recipient.fullName}
-                            />
+                          <div className="avatar">
+                            <div className="w-10 rounded-full">
+                              <img
+                                src={notification.recipient.profilePic}
+                                alt={notification.recipient.fullName}
+                              />
+                            </div>
                           </div>
                           <div className="flex-1">
                             <h3 className="font-semibold">{notification.recipient.fullName}</h3>

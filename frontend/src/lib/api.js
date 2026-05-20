@@ -1,9 +1,10 @@
+import { axiosInstance } from "./axios";
+
 // Update user profile
 export async function updateProfile(profileData) {
   const response = await axiosInstance.put("/users/profile", profileData);
   return response.data;
 }
-import { axiosInstance } from "./axios";
 
 export const signup = async (signupData) => {
   const response = await axiosInstance.post("/auth/signup", signupData);
