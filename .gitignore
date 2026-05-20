@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .env
+
+PROJECT_DOCUMENTATION.pdf
+PROJECT_DOCUMENTATION.md
